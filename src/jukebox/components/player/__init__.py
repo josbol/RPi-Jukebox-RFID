@@ -2,6 +2,7 @@ import os
 import re
 import logging
 import jukebox.cfghandler
+import jukebox.components.spotify  # P29c0
 from typing import Optional
 
 
@@ -53,3 +54,18 @@ def get_music_library_path():
     if _MUSIC_LIBRARY_PATH is None:
         _MUSIC_LIBRARY_PATH = MusicLibPath()
     return _MUSIC_LIBRARY_PATH.music_library_path
+
+
+def play_spotify_track(track_uri: str):
+    """Play a Spotify track given its URI"""
+    jukebox.components.spotify.play_spotify_track(track_uri)
+
+
+def pause_spotify_playback():
+    """Pause Spotify playback"""
+    jukebox.components.spotify.pause_spotify_playback()
+
+
+def resume_spotify_playback():
+    """Resume Spotify playback"""
+    jukebox.components.spotify.resume_spotify_playback()

@@ -177,6 +177,12 @@ class MQTT(threading.Thread):
                 self._send_volume(payload)
             elif topic == "playerstatus":
                 self._send_player_state(payload)
+            elif topic == "spotify.play":
+                self._send_throttled("spotify/play", payload)
+            elif topic == "spotify.pause":
+                self._send_throttled("spotify/pause", payload)
+            elif topic == "spotify.resume":
+                self._send_throttled("spotify/resume", payload)
         logger.info("Exiting MQTT Thread")
 
     def stop(self):

@@ -17,6 +17,7 @@ import logging
 import logging.config
 import jukebox.daemon
 import misc.loggingext
+import jukebox.components.spotify  # P811e
 
 
 def main():
@@ -61,6 +62,7 @@ def main():
         logger.warning(f"script_path : '{script_path}'")
     myjukebox = jukebox.daemon.get_jukebox_daemon(args.conf.name, args.artifacts)
     myjukebox.run()
+    jukebox.components.spotify.initialize()  # P3525
 
 
 if __name__ == "__main__":
