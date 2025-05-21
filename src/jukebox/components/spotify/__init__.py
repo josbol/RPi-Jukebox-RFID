@@ -2,12 +2,14 @@ import logging
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import jukebox.plugs as plugin
+import jukebox.cfghandler
 
 logger = logging.getLogger('jb.spotify')
+cfg = jukebox.cfghandler.get_handler('jukebox')
 
-SPOTIPY_CLIENT_ID = 'your_spotify_client_id'
-SPOTIPY_CLIENT_SECRET = 'your_spotify_client_secret'
-SPOTIPY_REDIRECT_URI = 'your_spotify_redirect_uri'
+SPOTIPY_CLIENT_ID = cfg.get('spotify', 'client_id')
+SPOTIPY_CLIENT_SECRET = cfg.get('spotify', 'client_secret')
+SPOTIPY_REDIRECT_URI = cfg.get('spotify', 'redirect_uri')
 
 scope = 'user-read-playback-state,user-modify-playback-state,user-read-currently-playing'
 
@@ -45,3 +47,13 @@ def resume_spotify_playback():
         logger.info("Resumed Spotify playback")
     except Exception as e:
         logger.error(f"Failed to resume Spotify playback: {e}")
+
+
+def initialize():
+    """Initialize the Spotify module"""
+    global sp
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID,
+                                                   client_secret=SPOTIPY_CLIENT_SECRET,
+                                                   redirect_uri=SPOTIPY_REDIRECT_URI,
+                                                   scope=scope))
+    logger.info("Spotify module initialized")
