@@ -9,6 +9,7 @@ import jukebox.plugs as plugin
 import jukebox.utils
 from jukebox.daemon import get_jukebox_daemon
 import jukebox.cfghandler
+import jukebox.components.spotify
 
 logger = logging.getLogger('jb.misc')
 cfg = jukebox.cfghandler.get_handler('jukebox')
@@ -124,3 +125,21 @@ def set_app_settings(settings={}):
     """Set configuration settings for the web app."""
     for key, value in settings.items():
         cfg.setn('webapp', key, value=value)
+
+
+@plugin.register
+def play_spotify_track(track_uri: str):
+    """Play a Spotify track given its URI"""
+    jukebox.components.spotify.play_spotify_track(track_uri)
+
+
+@plugin.register
+def pause_spotify_playback():
+    """Pause Spotify playback"""
+    jukebox.components.spotify.pause_spotify_playback()
+
+
+@plugin.register
+def resume_spotify_playback():
+    """Resume Spotify playback"""
+    jukebox.components.spotify.resume_spotify_playback()
